@@ -2,6 +2,7 @@ package com.bacchoterra.memoriav2.model;
 
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "categoria_table")
@@ -9,13 +10,13 @@ public class Categoria {
 
     private String titulo;
     @PrimaryKey(autoGenerate = true)
-    private String roomId;
+    private int roomId;
 
-    public Categoria(String titulo, String roomId) {
+    public Categoria(String titulo) {
         this.titulo = titulo;
-        this.roomId = roomId;
     }
 
+    @Ignore
     public Categoria() {
     }
 
@@ -27,11 +28,11 @@ public class Categoria {
         this.titulo = titulo;
     }
 
-    public String getRoomId() {
+    public int getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(String roomId) {
+    public void setRoomId(int roomId) {
         this.roomId = roomId;
     }
 }

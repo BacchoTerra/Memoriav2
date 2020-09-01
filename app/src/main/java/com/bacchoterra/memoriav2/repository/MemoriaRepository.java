@@ -8,11 +8,12 @@ import com.bacchoterra.memoriav2.database.MyDatabase;
 import com.bacchoterra.memoriav2.model.Memoria;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MemoriaRepository {
 
     private MemoriaDao memoriaDao;
-    private ArrayList<Memoria> allMemoriaFromCat;
+    private List<Memoria> allMemoriaFromCat;
 
     public MemoriaRepository(Application application, String category) {
 
@@ -38,7 +39,7 @@ public class MemoriaRepository {
         new DeleteAllMemoriaAsync(memoriaDao,cat).execute(m);
     }
 
-    public ArrayList<Memoria> getAllMemoriaFromCat(String string){
+    public List<Memoria> getAllMemoriaFromCat(String string){
         return allMemoriaFromCat;
     }
 

@@ -28,7 +28,7 @@ public interface MemoriaDao {
     void deleteAll(String category);
 
     @Query("SELECT * FROM memoria_table WHERE category = :category")
-    ArrayList<Memoria> selectAllMemoriaFromCategory(String category);
+    List<Memoria> selectAllMemoriaFromCategory(String category);
 
 
 }

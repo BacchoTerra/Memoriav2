@@ -1,6 +1,7 @@
 package com.bacchoterra.memoriav2.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "memoria_table")
@@ -10,18 +11,18 @@ public class Memoria {
     private String descricaoMemoria;
     private String category;
     @PrimaryKey(autoGenerate = true)
-    private String roomId;
+    private int roomId;
     private int importancia = 0;
 
 
+    @Ignore
     public Memoria() {
     }
 
 
-    public Memoria(String tituloMemoria, String descricaoMemoria, String roomId, int importancia, String category) {
+    public Memoria(String tituloMemoria, String descricaoMemoria, int importancia, String category) {
         this.tituloMemoria = tituloMemoria;
         this.descricaoMemoria = descricaoMemoria;
-        this.roomId = roomId;
         this.importancia = importancia;
         this.category = category;
     }
@@ -43,11 +44,11 @@ public class Memoria {
         this.descricaoMemoria = descricaoMemoria;
     }
 
-    public String getRoomId() {
+    public int getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(String roomId) {
+    public void setRoomId(int roomId) {
         this.roomId = roomId;
     }
 

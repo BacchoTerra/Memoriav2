@@ -1,5 +1,7 @@
 package com.bacchoterra.memoriav2.dao;
 
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -10,6 +12,7 @@ import com.bacchoterra.memoriav2.model.Categoria;
 import java.util.ArrayList;
 import java.util.List;
 
+@Dao
 public interface CategoriaDao {
 
     @Insert
@@ -25,7 +28,7 @@ public interface CategoriaDao {
     void deleteAll();
 
     @Query("SELECT * FROM categoria_table")
-    ArrayList<Categoria> selectAllCategory();
+    LiveData<List<Categoria>> selectAllCategory();
 
 
 }

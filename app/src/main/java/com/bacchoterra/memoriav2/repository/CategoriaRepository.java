@@ -3,20 +3,18 @@ package com.bacchoterra.memoriav2.repository;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import androidx.room.Delete;
+import androidx.lifecycle.LiveData;
 
 import com.bacchoterra.memoriav2.dao.CategoriaDao;
-import com.bacchoterra.memoriav2.dao.MemoriaDao;
 import com.bacchoterra.memoriav2.database.MyDatabase;
 import com.bacchoterra.memoriav2.model.Categoria;
-import com.bacchoterra.memoriav2.model.Memoria;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CategoriaRepository {
 
     private CategoriaDao categoriaDao;
-    private ArrayList<Categoria> allCategorias;
+    private LiveData<List<Categoria>> allCategorias;
 
     public CategoriaRepository(Application application) {
 
@@ -40,6 +38,10 @@ public class CategoriaRepository {
 
     public void deleteAll(){
         new DeleteAllCatAsync(categoriaDao).execute();
+    }
+
+    public LiveData<List<Categoria>> selectAllCategoria(){
+        return allCategorias;
     }
 
     private static class InsertCatAsync extends AsyncTask<Categoria,Void,Void>{

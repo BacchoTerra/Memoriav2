@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Memoria v.2</string>
+    <string name="adicione_uma_categoria">Adicione uma categoria</string>
+    <string name="crie_uma_categoria">Crie uma categoria</string>
+    <string name="categoria_reticencias">Categoria..</string>
+    <string name="salvar">Salvar</string>
+    <string name="close">close</string>
+    <string name="open">open</string>
 </resources>
