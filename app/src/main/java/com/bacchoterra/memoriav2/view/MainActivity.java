@@ -15,19 +15,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bacchoterra.memoriav2.R;
 import com.bacchoterra.memoriav2.adapter.CategoryAdapter;
+import com.bacchoterra.memoriav2.helper.RecyclerItemClickListener;
 import com.bacchoterra.memoriav2.model.Categoria;
 import com.bacchoterra.memoriav2.repository.CategoriaRepository;
 import com.bacchoterra.memoriav2.viewmodel.CategoriaViewmodel;
+import com.bacchoterra.memoriav2.viewmodel.MemoriaViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -45,9 +49,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Database
     private CategoriaViewmodel categoriaViewmodel;
+    private MemoriaViewModel memoriaViewModel;
 
     //Recyclerview
     public CategoryAdapter categoryAdapter;
+
+    //Bundle components
+    public static final String CAT_KEY = "cat_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +129,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerCategorias);
 
 
+        recyclerCategorias.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerCategorias, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                String category = categoryAdapter.getCategoria(position).getTitulo();
+                Intent intent = new Intent(MainActivity.this,MemoriaActivity.class);
+                intent.putExtra(CAT_KEY,category);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        }));
+
+
     }
 
     private void initViews() {
@@ -159,6 +189,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        memoriaViewModel = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MemoriaViewModel.class);
+
 
     }
 
@@ -171,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 categoriaViewmodel.delete(categoria);
+                memoriaViewModel.deleteAllFromCat(categoria.getTitulo());
                 Toast.makeText(MainActivity.this, R.string.item_deletado, Toast.LENGTH_SHORT).show();
             }
         }).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {

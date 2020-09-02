@@ -14,4 +14,8 @@
     <string name="cancelar">cancelar</string>
     <string name="item_deletado">Item deletado</string>
     <string name="categoria_editada">Categoria editada</string>
+    <string name="titulo_opcional">Título (Opcional)</string>
+    <string name="anota_o">Anotação</string>
+    <string name="n_vel_de_import_ncia">Nível de importância:</string>
+    <string name="min_5_caracteres_anotacao">A anotaçãp deve ter pelo menos 5 caracteres</string>
 </resources>

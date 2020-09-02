@@ -3,6 +3,8 @@ package com.bacchoterra.memoriav2.repository;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+
 import com.bacchoterra.memoriav2.dao.MemoriaDao;
 import com.bacchoterra.memoriav2.database.MyDatabase;
 import com.bacchoterra.memoriav2.model.Memoria;
@@ -13,13 +15,12 @@ import java.util.List;
 public class MemoriaRepository {
 
     private MemoriaDao memoriaDao;
-    private List<Memoria> allMemoriaFromCat;
+    private LiveData<List<Memoria>> allMemoriaFromCat;
 
-    public MemoriaRepository(Application application, String category) {
+    public MemoriaRepository(Application application) {
 
         MyDatabase myDatabase = MyDatabase.getInstance(application);
         memoriaDao = myDatabase.memoriaDao();
-        allMemoriaFromCat = memoriaDao.selectAllMemoriaFromCategory(category);
 
     }
 
@@ -35,11 +36,12 @@ public class MemoriaRepository {
         new DeleteMemoriaAsync(memoriaDao).execute(m);
     }
 
-    public void deleteAll(Memoria m,String cat){
-        new DeleteAllMemoriaAsync(memoriaDao,cat).execute(m);
+    public void deleteAll(String cat){
+        new DeleteAllMemoriaAsync(memoriaDao,cat).execute();
     }
 
-    public List<Memoria> getAllMemoriaFromCat(String string){
+    public LiveData<List<Memoria>> getAllMemoriaFromCat(String string){
+        allMemoriaFromCat = memoriaDao.selectAllMemoriaFromCategory(string);
         return allMemoriaFromCat;
     }
 
