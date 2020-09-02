@@ -206,12 +206,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialogInterface, int i) {
                 EditText editCategoria = editLayout.findViewById(R.id.dialog_edit_categoria_editCat);
 
+                if (editCategoria.getText().toString().trim().length()>= 4){
+                    Categoria edited = new Categoria();
+                    edited.setTitulo(editCategoria.getText().toString());
+                    edited.setRoomId(categoria.getRoomId());
 
-                Categoria edited = new Categoria();
-                edited.setTitulo(editCategoria.getText().toString());
-                edited.setRoomId(categoria.getRoomId());
+                    categoriaViewmodel.update(edited);
+                }else {
+                    Toast.makeText(MainActivity.this, R.string.minimo_de_4_letras, Toast.LENGTH_SHORT).show();
+                    categoryAdapter.notifyItemChanged(position);
+                }
 
-                categoriaViewmodel.update(edited);
 
             }
         }).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
