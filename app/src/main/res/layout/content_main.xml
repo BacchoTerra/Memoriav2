@@ -5,7 +5,7 @@
     android:id="@+id/content_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/shape_black_grad"
     android:orientation="vertical"
     tools:context=".view.MainActivity">
 
@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:text="@string/crie_uma_categoria"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/colorAccent"
         android:textSize="39sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,31 +30,29 @@
         android:layout_height="wrap_content"
         app:counterEnabled="true"
         app:counterMaxLength="20"
-        app:layout_constraintBottom_toTopOf="@+id/btnSalvarCategoria"
+        app:layout_constraintBottom_toTopOf="@+id/main_activity_btnSalvarCategoria"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editCategoria"
+            android:id="@+id/main_activity_editCategoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/categoria_reticencias"
             android:inputType="textPersonName"
             android:maxLength="20"
+            android:textColor="@color/colorAccent"
             android:paddingLeft="20dp"
-            android:textColor="@android:color/darker_gray"
             android:textSize="30sp"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <Button
-        android:id="@+id/btnSalvarCategoria"
-        android:layout_width="match_parent"
+        android:id="@+id/main_activity_btnSalvarCategoria"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="32dp"
         android:text="@string/salvar"
-        android:textSize="20sp"
+        app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

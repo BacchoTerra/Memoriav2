@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bacchoterra.memoriav2.R;
 import com.bacchoterra.memoriav2.model.Categoria;
 
-import java.util.List;
-
-public class NavAdapter extends ListAdapter<Categoria, NavAdapter.MyViewHolder> {
+public class CategoryAdapter extends ListAdapter<Categoria, CategoryAdapter.MyViewHolder> {
 
 
     static final DiffUtil.ItemCallback<Categoria> DIFF_UTIL = new DiffUtil.ItemCallback<Categoria>() {
@@ -30,7 +28,7 @@ public class NavAdapter extends ListAdapter<Categoria, NavAdapter.MyViewHolder> 
         }
     };
 
-    public NavAdapter() {
+    public CategoryAdapter() {
         super(DIFF_UTIL);
     }
 
@@ -39,7 +37,7 @@ public class NavAdapter extends ListAdapter<Categoria, NavAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_nav, parent, false);
+        View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item_row, parent, false);
 
         return new MyViewHolder(itemLista);
     }

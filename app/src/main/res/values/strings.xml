@@ -6,4 +6,6 @@
     <string name="salvar">Salvar</string>
     <string name="close">close</string>
     <string name="open">open</string>
+    <string name="feito">Feito</string>
+    <string name="minimo_de_4_letras">Mínimo de 4 caracteres</string>
 </resources>
