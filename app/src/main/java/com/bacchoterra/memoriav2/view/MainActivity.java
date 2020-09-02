@@ -1,19 +1,27 @@
 package com.bacchoterra.memoriav2.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.bacchoterra.memoriav2.R;
 import com.bacchoterra.memoriav2.adapter.CategoryAdapter;
@@ -23,6 +31,8 @@ import com.bacchoterra.memoriav2.viewmodel.CategoriaViewmodel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerCategorias;
 
     //Database
-    private CategoriaRepository categoriaRepository;
     private CategoriaViewmodel categoriaViewmodel;
 
     //Recyclerview
@@ -64,6 +73,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         categoryAdapter = new CategoryAdapter();
         recyclerCategorias.setAdapter(categoryAdapter);
 
+
+        ItemTouchHelper.Callback itemTouchHelper = new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+
+                int drag_flags = ItemTouchHelper.ACTION_STATE_IDLE;
+                int swipe_flags = ItemTouchHelper.END | ItemTouchHelper.START;
+
+                return makeMovementFlags(drag_flags, swipe_flags);
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Categoria categoria = categoryAdapter.getCategoria(viewHolder.getAdapterPosition());
+
+                if (direction == 32) {
+                    initAlertDialogDelete(categoria, viewHolder.getAdapterPosition());
+                } else {
+                    initAlertDialogEdit(categoria, viewHolder.getAdapterPosition());
+                }
+
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeRightBackgroundColor(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_dark))
+                        .addSwipeRightActionIcon(R.drawable.ic_outline_delete_forever_24)
+                        .addSwipeLeftActionIcon(R.drawable.ic_baseline_create_24)
+                        .addSwipeLeftBackgroundColor(getResources().getColor(R.color.lightBlueGray))
+                        .create()
+                        .decorate();
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+            }
+        };
+
+        new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerCategorias);
+
+
     }
 
     private void initViews() {
@@ -80,6 +137,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initToolbarAndDrawer() {
 
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Welcome back");
+        }
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -92,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         categoriaViewmodel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(CategoriaViewmodel.class);
 
 
-        categoriaViewmodel.deleteAll();
         categoriaViewmodel.selectAllCategoria().observe(this, new Observer<List<Categoria>>() {
             @Override
             public void onChanged(List<Categoria> list) {
@@ -100,6 +159,79 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+    }
+
+    private void initAlertDialogDelete(final Categoria categoria, final int position) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.deletar_item);
+        builder.setMessage(R.string.deseja_deletar_a_categoria_e_seu_conteudo);
+        builder.setPositiveButton(R.string.deletar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                categoriaViewmodel.delete(categoria);
+                Toast.makeText(MainActivity.this, R.string.item_deletado, Toast.LENGTH_SHORT).show();
+            }
+        }).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                categoryAdapter.notifyItemChanged(position);
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                categoryAdapter.notifyItemChanged(position);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        Button pBtn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        pBtn.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+        nBtn.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+
+    }
+
+    private void initAlertDialogEdit(final Categoria categoria, final int position) {
+
+        final View editLayout = getLayoutInflater().inflate(R.layout.dialog_edit_categoria, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Atual: " + categoria.getTitulo());
+        builder.setView(editLayout);
+        builder.setPositiveButton(R.string.salvar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                EditText editCategoria = editLayout.findViewById(R.id.dialog_edit_categoria_editCat);
+
+
+                Categoria edited = new Categoria();
+                edited.setTitulo(editCategoria.getText().toString());
+                edited.setRoomId(categoria.getRoomId());
+
+                categoriaViewmodel.update(edited);
+
+            }
+        }).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                categoryAdapter.notifyItemChanged(position);
+            }
+        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                categoryAdapter.notifyItemChanged(position);
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        Button pBtn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        pBtn.setTextColor(getResources().getColor(R.color.lightBlueGray));
+        nBtn.setTextColor(getResources().getColor(R.color.colorPrimary));
 
     }
 
@@ -116,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     categoria.setTitulo(cat);
                     categoriaViewmodel.insert(categoria);
                     editCategoria.setText(null);
-                    Snackbar.make(toolbar, R.string.feito, Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.feito, Toast.LENGTH_SHORT).show();
                 } else if (cat.isEmpty()) {
                     editCategoria.setError("*");
                 } else {

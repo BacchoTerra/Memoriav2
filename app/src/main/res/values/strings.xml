@@ -8,4 +8,10 @@
     <string name="open">open</string>
     <string name="feito">Feito</string>
     <string name="minimo_de_4_letras">Mínimo de 4 caracteres</string>
+    <string name="deletar_item">Deletar item</string>
+    <string name="deseja_deletar_a_categoria_e_seu_conteudo">Deseja deletar essa categoria e todo seu conteudo?</string>
+    <string name="deletar">deletar</string>
+    <string name="cancelar">cancelar</string>
+    <string name="item_deletado">Item deletado</string>
+    <string name="categoria_editada">Categoria editada</string>
 </resources>
