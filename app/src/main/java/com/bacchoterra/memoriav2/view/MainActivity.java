@@ -240,11 +240,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 EditText editCategoria = editLayout.findViewById(R.id.dialog_edit_categoria_editCat);
 
                 if (editCategoria.getText().toString().trim().length()>= 4){
+
+
+                    String oldCat = categoria.getTitulo();
+                    String newCat = editCategoria.getText().toString();
+
                     Categoria edited = new Categoria();
                     edited.setTitulo(editCategoria.getText().toString());
                     edited.setRoomId(categoria.getRoomId());
 
                     categoriaViewmodel.update(edited);
+                    memoriaViewModel.updateAllCat(oldCat,newCat);
                 }else {
                     Toast.makeText(MainActivity.this, R.string.minimo_de_4_letras, Toast.LENGTH_SHORT).show();
                     categoryAdapter.notifyItemChanged(position);

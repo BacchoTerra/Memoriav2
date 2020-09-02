@@ -32,8 +32,14 @@ public class MemoriaViewModel extends AndroidViewModel {
     public void delete(Memoria memoria){
         memoriaRepository.delete(memoria);
     }
+
     public void deleteAllFromCat(String categoria){
         memoriaRepository.deleteAll(categoria);
+    }
+
+    public void updateAllCat(String oldCat,String newCat){
+        memoriaRepository.updateAllCat(oldCat,newCat);
+
     }
 
     public LiveData<List<Memoria>> getAllMemoria (String categoria) {

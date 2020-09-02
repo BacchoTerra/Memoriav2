@@ -40,6 +40,10 @@ public class MemoriaRepository {
         new DeleteAllMemoriaAsync(memoriaDao,cat).execute();
     }
 
+    public void updateAllCat(String oldCat,String newCat){
+        new UpdateAllCatAsync(memoriaDao,oldCat,newCat).execute();
+    }
+
     public LiveData<List<Memoria>> getAllMemoriaFromCat(String string){
         allMemoriaFromCat = memoriaDao.selectAllMemoriaFromCategory(string);
         return allMemoriaFromCat;
@@ -112,4 +116,25 @@ public class MemoriaRepository {
             return null;
         }
     }
+
+    private static class UpdateAllCatAsync extends AsyncTask<Memoria, Void, Void> {
+
+        private MemoriaDao mDao;
+        private String oldCat;
+        private String newCat;
+
+        private UpdateAllCatAsync(MemoriaDao dao,String oldCat,String newCat) {
+            this.mDao = dao;
+            this.oldCat = oldCat;
+            this.newCat = newCat;
+        }
+
+        @Override
+        protected Void doInBackground(Memoria... memorias) {
+
+            mDao.updateAllCategories(oldCat,newCat);
+            return null;
+        }
+    }
+
 }

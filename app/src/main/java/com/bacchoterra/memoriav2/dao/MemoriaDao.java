@@ -31,5 +31,8 @@ public interface MemoriaDao {
     @Query("SELECT * FROM memoria_table WHERE category = :category")
     LiveData<List<Memoria>> selectAllMemoriaFromCategory(String category);
 
+    @Query("UPDATE memoria_table SET category = :newCat WHERE category = :oldCat")
+    void updateAllCategories(String oldCat,String newCat);
+
 
 }
