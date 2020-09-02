@@ -24,7 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
 
-public class MemoriaActivity extends AppCompatActivity implements View.OnClickListener{
+public class MemoriaActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Components de layout
     private Toolbar toolbar;
@@ -35,12 +35,11 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
     private MemoriaViewModel memoriaViewModel;
 
     //Recycler
-    MemoriaAdapter adapter;
+    private MemoriaAdapter adapter;
 
     //Componente de bundle
     private Bundle bundle;
     private String stringCategoria;
-
 
 
     @Override
@@ -58,7 +57,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
         initRecyclerView();
     }
 
-    private void initViews(){
+    private void initViews() {
 
         toolbar = findViewById(R.id.activity_memoria_toolbar);
         fabAddMemoria = findViewById(R.id.activity_memoria_fabAddMemoria);
@@ -68,7 +67,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void iniToolbar(){
+    private void iniToolbar() {
 
         bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -78,15 +77,15 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
         toolbar.setTitle(stringCategoria);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
     }
 
-    private void initViewModel(){
+    private void initViewModel() {
 
-        memoriaViewModel = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MemoriaViewModel.class);
+        memoriaViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MemoriaViewModel.class);
         memoriaViewModel.getAllMemoria(stringCategoria).observe(this, new Observer<List<Memoria>>() {
             @Override
             public void onChanged(List<Memoria> memorias) {
@@ -97,21 +96,21 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        adapter = new MemoriaAdapter();
+        adapter = new MemoriaAdapter(this);
         recyclerView.setAdapter(adapter);
 
     }
 
 
-    private void initAddDialog(){
+    private void initAddDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_memoria,null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_memoria, null);
         builder.setView(dialogView);
 
         final TextInputEditText editTitulo = dialogView.findViewById(R.id.dialog_add_memoria_editTitulo);
@@ -126,15 +125,23 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
                 String titulo = editTitulo.getText().toString();
                 String desc = editDesc.getText().toString();
                 int importancia = seekImport.getProgress();
-                if (desc.trim().length() >=5){
+                if (desc.trim().length() >= 5) {
 
                     Memoria memoria = new Memoria();
-                    memoria.setTituloMemoria(titulo);
+
+                    if (titulo.isEmpty()) {
+                        memoria.setTituloMemoria(null);
+                        Toast.makeText(MemoriaActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                    } else {
+                        memoria.setTituloMemoria(titulo);
+                    }
+
+
                     memoria.setDescricaoMemoria(desc);
                     memoria.setImportancia(importancia);
                     memoria.setCategory(stringCategoria);
                     memoriaViewModel.insert(memoria);
-                }else {
+                } else {
                     Toast.makeText(MemoriaActivity.this, R.string.min_5_caracteres_anotacao, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -148,7 +155,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.activity_memoria_fabAddMemoria:
 
                 initAddDialog();

@@ -8,4 +8,9 @@
 
     <color name="importancia">#FF1100</color>
     <color name="lightGray">#E8E8E8</color>
+
+    <color name="grayBackGround">#cacaca</color>
+
+    <color name="imp2">#EF9A9A</color>
+    <color name="imp3">#EF5350</color>
 </resources>
