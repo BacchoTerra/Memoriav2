@@ -5,7 +5,6 @@
     android:id="@+id/content_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_black_grad"
     android:orientation="vertical"
     tools:context=".view.MainActivity">
 
@@ -16,7 +15,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:text="@string/crie_uma_categoria"
-        android:textColor="@color/colorAccent"
         android:textSize="39sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +38,6 @@
             android:hint="@string/categoria_reticencias"
             android:inputType="textPersonName"
             android:maxLength="20"
-            android:textColor="@color/colorAccent"
             android:paddingLeft="20dp"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -49,10 +46,11 @@
 
     <Button
         android:id="@+id/main_activity_btnSalvarCategoria"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/salvar"
-        android:textColor="@android:color/black"
+        app:backgroundTint="@color/colorPrimary"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

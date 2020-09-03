@@ -16,8 +16,10 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_memoria_toolbar"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@android:color/white" />
 
 
     </com.google.android.material.appbar.AppBarLayout>

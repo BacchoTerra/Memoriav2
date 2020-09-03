@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="@android:color/white"
     android:layout_marginVertical="3dp"
+    android:background="@android:color/white"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:padding="8dp">
 
 
     <TextView
         android:id="@+id/txtNavRecycler"
         android:layout_width="match_parent"
-        android:text="asdadasd"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold|italic"
-        android:paddingLeft="15dp"/>
+        android:drawableStart="@drawable/ic_baseline_arrow_forward_ios_24"
+        android:drawableLeft="@drawable/ic_baseline_arrow_forward_ios_24"
+        android:drawablePadding="6dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="6dp"
+        android:paddingEnd="6dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:text="Android studio" />
 
 </LinearLayout>

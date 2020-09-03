@@ -101,7 +101,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        adapter = new MemoriaAdapter(this);
+        adapter = new MemoriaAdapter(this,memoriaViewModel);
         recyclerView.setAdapter(adapter);
 
     }

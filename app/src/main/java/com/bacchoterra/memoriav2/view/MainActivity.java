@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     categoria.setTitulo(cat);
                     categoriaViewmodel.insert(categoria);
                     editCategoria.setText(null);
-                    Toast.makeText(this, R.string.feito, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.categoria_adicionada, Toast.LENGTH_SHORT).show();
                 } else if (cat.isEmpty()) {
                     editCategoria.setError("*");
                 } else {
