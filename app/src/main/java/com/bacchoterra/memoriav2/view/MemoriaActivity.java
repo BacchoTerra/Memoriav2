@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
     private Toolbar toolbar;
     private FloatingActionButton fabAddMemoria;
     private RecyclerView recyclerView;
+    private ImageView imageBlank;
 
     //Componentes de database
     private MemoriaViewModel memoriaViewModel;
@@ -62,6 +64,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
         toolbar = findViewById(R.id.activity_memoria_toolbar);
         fabAddMemoria = findViewById(R.id.activity_memoria_fabAddMemoria);
         recyclerView = findViewById(R.id.activity_memoria_recyclerView);
+        imageBlank = findViewById(R.id.activity_memoria_imageBlank);
 
         fabAddMemoria.setOnClickListener(this);
 
@@ -89,7 +92,18 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
         memoriaViewModel.getAllMemoria(stringCategoria).observe(this, new Observer<List<Memoria>>() {
             @Override
             public void onChanged(List<Memoria> memorias) {
-                adapter.submitList(memorias);
+                if (!memorias.isEmpty()){
+                    adapter.submitList(memorias);
+
+                    if (imageBlank.getVisibility() == View.VISIBLE && recyclerView.getVisibility() == View.GONE){
+                        imageBlank.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+
+                }else {
+                    imageBlank.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -131,7 +145,6 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
 
                     if (titulo.isEmpty()) {
                         memoria.setTituloMemoria(null);
-                        Toast.makeText(MemoriaActivity.this, "empty", Toast.LENGTH_SHORT).show();
                     } else {
                         memoria.setTituloMemoria(titulo);
                     }

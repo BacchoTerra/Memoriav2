@@ -24,10 +24,22 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ImageView
+        android:id="@+id/activity_memoria_imageBlank"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:src="@drawable/undraw_empty_street_sfxm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_memoria_appBarLayout"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_memoria_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="visible"
         android:background="@color/grayBackGround"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
