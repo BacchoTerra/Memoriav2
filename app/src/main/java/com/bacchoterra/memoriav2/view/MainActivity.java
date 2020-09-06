@@ -18,7 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,10 +28,8 @@ import com.bacchoterra.memoriav2.R;
 import com.bacchoterra.memoriav2.adapter.CategoryAdapter;
 import com.bacchoterra.memoriav2.helper.RecyclerItemClickListener;
 import com.bacchoterra.memoriav2.model.Categoria;
-import com.bacchoterra.memoriav2.repository.CategoriaRepository;
 import com.bacchoterra.memoriav2.viewmodel.CategoriaViewmodel;
 import com.bacchoterra.memoriav2.viewmodel.MemoriaViewModel;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -239,6 +236,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         editCategoria.setText(categoria.getTitulo());
 
+        builder.setTitle(R.string.editar_categoria);
+
         builder.setPositiveButton(R.string.salvar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -280,7 +279,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         pBtn.setTextColor(getResources().getColor(R.color.positiveBtn));
         nBtn.setTextColor(getResources().getColor(R.color.negativeBtn));
-        //TODO: trocar cor dos botoes para cores instanciadas em color
 
     }
 

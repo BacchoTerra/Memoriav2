@@ -9,16 +9,15 @@
     <string name="feito">Feito</string>
     <string name="minimo_de_4_letras">Mínimo de 4 caracteres</string>
     <string name="deletar_item">Deletar item</string>
-    <string name="deseja_deletar_a_categoria_e_seu_conteudo">Deseja deletar essa categoria e todo seu conteudo?</string>
+    <string name="deseja_deletar_a_categoria_e_seu_conteudo">Deseja deletar essa categoria e todo seu conteúdo?</string>
     <string name="deseja_deletar_a_memoria">Deseja deletar essa anotação? Essa ação não pode ser desfeita. </string>
-    <string name="deletar">deletar</string>
-    <string name="cancelar">cancelar</string>
+    <string name="deletar">Deletar</string>
+    <string name="cancelar">Cancelar</string>
     <string name="item_deletado">Item deletado</string>
-    <string name="categoria_editada">Categoria editada</string>
+    <string name="editar_categoria">Editar categoria</string>
     <string name="titulo_opcional">Título (Opcional)</string>
     <string name="anota_o">Anotação</string>
     <string name="n_vel_de_import_ncia">Nível de importância:</string>
     <string name="min_5_caracteres_anotacao">A anotação deve ter pelo menos 5 caracteres</string>
     <string name="categoria_adicionada">Categoria adicionada</string>
-    <string name="suas_categorias">Suas categorias:</string>
 </resources>
