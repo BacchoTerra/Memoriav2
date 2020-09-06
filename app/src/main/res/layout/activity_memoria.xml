@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mainBackground"
     tools:context=".view.MemoriaActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -28,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/undraw_empty_street_sfxm"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +39,7 @@
         android:id="@+id/activity_memoria_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/mainBackground"
+        android:background="@color/recyclerViewBackground"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

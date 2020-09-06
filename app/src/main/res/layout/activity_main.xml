@@ -29,7 +29,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/main_activity_catRecyclerView"
-                android:background="@color/mainBackground"
+                android:background="@color/recyclerViewBackground"
                 android:layout_width="match_parent"
                 tools:listitem="@layout/category_item_row"
                 android:layout_height="match_parent" />

@@ -172,8 +172,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
         alertDialog.show();
         Button pBtn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        nBtn.setTextColor(getResources().getColor(R.color.negativeBtn));
-        pBtn.setTextColor(getResources().getColor(R.color.positiveBtn));
+        pBtn.setTextColor(getResources().getColor(R.color.colorAccent));
 
     }
 

@@ -5,9 +5,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
         <item name="alertDialogTheme">@style/MyAlertDialogTheme</item>
         <item name="android:textColorHint">@color/textColorSecondary</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/mainBackground</item>
 
     </style>
 
@@ -20,12 +21,10 @@
 
     </style>
 
-
     <style name="MyAlertDialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
 
         <item name="colorBackgroundFloating">@color/dialogBackground</item>
         <item name="android:textColor">@color/textColor</item>
-        <item name="android:textColorPrimary">@color/textColor</item>
         <item name="buttonBarPositiveButtonStyle">@style/MyDialogButton</item>
         <item name="buttonBarNegativeButtonStyle">@style/MyDialogButton</item>
 

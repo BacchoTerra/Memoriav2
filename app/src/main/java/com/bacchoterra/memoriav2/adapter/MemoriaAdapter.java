@@ -87,7 +87,7 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
 
         switch (memoria.getImportancia()) {
             case 0:
-                holder.cardView.setBackgroundColor(activity.getResources().getColor(android.R.color.white));
+                holder.cardView.setBackgroundColor(activity.getResources().getColor(R.color.cardBackground));
                 break;
             case 1:
                 holder.cardView.setBackgroundColor(activity.getResources().getColor(R.color.imp2));
@@ -143,10 +143,10 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
         }
     }
 
-    @SuppressLint("ResourceAsColor")
+
     private void initDeleteDialog(final Memoria memoria) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity,R.style.MyAlertDialogTheme);
         builder.setTitle(R.string.deletar_item);
         builder.setMessage(R.string.deseja_deletar_a_memoria);
         builder.setPositiveButton(R.string.deletar, new DialogInterface.OnClickListener() {
@@ -155,18 +155,17 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
                 mViewModel.delete(memoria);
             }
         });
-        AlertDialog alertDialog = builder.create();
+        androidx.appcompat.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
         Button pButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         pButton.setTextColor(activity.getResources().getColor(android.R.color.holo_red_dark));
-        pButton.setBackgroundColor(android.R.color.white);
 
 
     }
 
     private void initEditDialog(final Memoria memoria, final int position) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity,R.style.MyAlertDialogTheme);
         final View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_add_memoria, null);
         builder.setView(dialogView);
 
@@ -199,7 +198,9 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
             }
         });
 
-        AlertDialog alertDialog = builder.create();
+        androidx.appcompat.app.AlertDialog alertDialog = builder.create();
+        Button pBtn = alertDialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE);
+        pBtn.setTextColor(activity.getResources().getColor(R.color.colorAccent));
         alertDialog.show();
 
 

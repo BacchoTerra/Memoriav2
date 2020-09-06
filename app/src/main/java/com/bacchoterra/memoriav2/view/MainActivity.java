@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -21,7 +22,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.bacchoterra.memoriav2.R;
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editCategoria;
     private Button btnSalvar;
     private RecyclerView recyclerCategorias;
+    private Switch aSwitch;
 
     //Database
     private CategoriaViewmodel categoriaViewmodel;
@@ -64,10 +69,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
 
+
+
+
         initViews();
         initToolbarAndDrawer();
         initRecyclerView();
         initViewModel();
+    }
+
+    private void initViews() {
+        toolbar = findViewById(R.id.main_activity_toolbar);
+        drawerLayout = findViewById(R.id.main_activity_drawerLayout);
+        editCategoria = findViewById(R.id.main_activity_editCategoria);
+        btnSalvar = findViewById(R.id.main_activity_btnSalvarCategoria);
+        recyclerCategorias = findViewById(R.id.main_activity_catRecyclerView);
+        aSwitch = findViewById(R.id.switch1);
+
+        btnSalvar.setOnClickListener(this);
+
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
+
     }
 
     private void initRecyclerView() {
@@ -150,17 +181,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void initViews() {
-        toolbar = findViewById(R.id.main_activity_toolbar);
-        drawerLayout = findViewById(R.id.main_activity_drawerLayout);
-        editCategoria = findViewById(R.id.main_activity_editCategoria);
-        btnSalvar = findViewById(R.id.main_activity_btnSalvarCategoria);
-        recyclerCategorias = findViewById(R.id.main_activity_catRecyclerView);
-
-        btnSalvar.setOnClickListener(this);
-
-    }
-
     private void initToolbarAndDrawer() {
 
         setSupportActionBar(toolbar);
@@ -220,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button pBtn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         pBtn.setTextColor(getResources().getColor(R.color.swipeDelete));
-        nBtn.setTextColor(getResources().getColor(R.color.negativeBtn));
+        nBtn.setTextColor(getResources().getColor(R.color.textColor));
 
 
     }
@@ -231,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final EditText editCategoria = editLayout.findViewById(R.id.dialog_edit_categoria_editCat);
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.MyAlertDialogTheme);
         builder.setView(editLayout);
 
         editCategoria.setText(categoria.getTitulo());
@@ -277,8 +297,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
         Button pBtn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        pBtn.setTextColor(getResources().getColor(R.color.positiveBtn));
-        nBtn.setTextColor(getResources().getColor(R.color.negativeBtn));
+        pBtn.setTextColor(getResources().getColor(R.color.colorAccent));
+        nBtn.setTextColor(getResources().getColor(R.color.textColor));
 
     }
 
@@ -301,6 +321,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     editCategoria.setError(getString(R.string.minimo_de_4_letras));
                 }
+
+                break;
 
         }
     }

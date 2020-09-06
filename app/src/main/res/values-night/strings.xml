@@ -20,7 +20,4 @@
     <string name="n_vel_de_import_ncia">Nível de importância:</string>
     <string name="min_5_caracteres_anotacao">A anotação deve ter pelo menos 5 caracteres</string>
     <string name="categoria_adicionada">Categoria adicionada</string>
-    <string name="deslize_uma_categoria_para_a_direita_para_excluir">- Deslize uma categoria para a direita para excluir.</string>
-    <string name="inicie_um_deslize_para_a_direita_e_ent_o_deslize_para_a_esquerda_para_editar_a_categoria">- Inicie um deslize para a direita, e então deslize para a esquerda para editar a categoria.</string>
-    <string name="as_categorias_ficam_salvas_na_aba_lateral_esquerda">- As categorias ficam salvas na aba lateral esquerda.</string>
 </resources>
