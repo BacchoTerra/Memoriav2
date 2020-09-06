@@ -18,7 +18,7 @@
     <string name="titulo_opcional">Título (Opcional)</string>
     <string name="anota_o">Anotação</string>
     <string name="n_vel_de_import_ncia">Nível de importância:</string>
-    <string name="min_5_caracteres_anotacao">A anotaçãp deve ter pelo menos 5 caracteres</string>
+    <string name="min_5_caracteres_anotacao">A anotação deve ter pelo menos 5 caracteres</string>
     <string name="categoria_adicionada">Categoria adicionada</string>
     <string name="suas_categorias">Suas categorias:</string>
 </resources>

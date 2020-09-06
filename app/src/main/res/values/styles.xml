@@ -9,4 +9,14 @@
 
     </style>
 
+
+    <style name="MyToolbarStyle" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <item name="android:background">@color/toolbarBackground</item>
+        <item name="android:textColor">@color/toolbarTextColor</item>
+        <item name="colorControlNormal">@color/toolbarTextColor</item>
+
+    </style>
+
+
 </resources>

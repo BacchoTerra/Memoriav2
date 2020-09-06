@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -132,7 +133,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
         final SeekBar seekImport = dialogView.findViewById(R.id.dialog_add_memoria_seekBar);
 
 
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setPositiveButton(R.string.salvar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -159,10 +160,20 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
         });
+        builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
 
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+        Button pBtn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        nBtn.setTextColor(getResources().getColor(R.color.negativeBtn));
+        pBtn.setTextColor(getResources().getColor(R.color.positiveBtn));
 
     }
 

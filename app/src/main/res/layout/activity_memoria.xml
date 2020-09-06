@@ -16,10 +16,9 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_memoria_toolbar"
-            style="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:theme="@style/MyToolbarStyle"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:titleTextColor="@android:color/white" />
+            android:layout_height="?attr/actionBarSize" />
 
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -28,19 +27,19 @@
         android:id="@+id/activity_memoria_imageBlank"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
         android:src="@drawable/undraw_empty_street_sfxm"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_memoria_appBarLayout"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_memoria_appBarLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_memoria_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/mainBackground"
         android:visibility="visible"
-        android:background="@color/grayBackGround"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

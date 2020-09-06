@@ -114,10 +114,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                        .addSwipeRightBackgroundColor(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_dark))
+                        .addSwipeRightBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.swipeDelete))
                         .addSwipeRightActionIcon(R.drawable.ic_outline_delete_forever_24)
                         .addSwipeLeftActionIcon(R.drawable.ic_baseline_create_24)
-                        .addSwipeLeftBackgroundColor(getResources().getColor(R.color.lightBlueGray))
+                        .addSwipeLeftBackgroundColor(getResources().getColor(R.color.swipeEdit))
                         .create()
                         .decorate();
 
@@ -222,8 +222,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
         Button pBtn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        pBtn.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-        nBtn.setTextColor(getResources().getColor(R.color.colorPrimary));
+        pBtn.setTextColor(getResources().getColor(R.color.swipeDelete));
+        nBtn.setTextColor(getResources().getColor(R.color.negativeBtn));
 
 
     }
@@ -231,13 +231,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initAlertDialogEdit(final Categoria categoria, final int position) {
 
         final View editLayout = getLayoutInflater().inflate(R.layout.dialog_edit_categoria, null);
+        final EditText editCategoria = editLayout.findViewById(R.id.dialog_edit_categoria_editCat);
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Atual: " + categoria.getTitulo());
         builder.setView(editLayout);
+
+        editCategoria.setText(categoria.getTitulo());
+
         builder.setPositiveButton(R.string.salvar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                EditText editCategoria = editLayout.findViewById(R.id.dialog_edit_categoria_editCat);
 
                 if (editCategoria.getText().toString().trim().length()>= 4){
 
@@ -274,8 +278,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
         Button pBtn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button nBtn = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        pBtn.setTextColor(getResources().getColor(R.color.lightBlueGray));
-        nBtn.setTextColor(getResources().getColor(R.color.colorPrimary));
+        pBtn.setTextColor(getResources().getColor(R.color.positiveBtn));
+        nBtn.setTextColor(getResources().getColor(R.color.negativeBtn));
+        //TODO: trocar cor dos botoes para cores instanciadas em color
 
     }
 

@@ -11,6 +11,7 @@
         android:id="@+id/memoria_item_row_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/cardBackground"
         app:cardElevation="4dp">
 
         <LinearLayout
@@ -32,6 +33,7 @@
                 android:padding="3dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="italic"
+                android:textColor="@color/textColor"
                 tools:text="Esse é o titulo" />
 
             <View
@@ -48,7 +50,7 @@
                 android:layout_marginVertical="8dp"
                 android:autoLink="all"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 android:textIsSelectable="true"
                 tools:text="Aqui vai ser a descrião de cada nota, aka memoria Aqui vai ser a descrião de cada nota, aka memoria Aqui vai ser a descrião de cada nota, aka memoria Aqui vai ser a descrião de cada nota, aka memoria" />
 
@@ -68,7 +70,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@android:color/black" />
+                    app:tint="@color/vectorTint" />
 
                 <ImageView
                     android:id="@+id/memoria_item_row_imageEdit"
@@ -82,7 +84,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/memoria_item_row_imageDelete"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@android:color/black" />
+                    app:tint="@color/vectorTint" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
