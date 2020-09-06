@@ -146,7 +146,7 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
 
     private void initDeleteDialog(final Memoria memoria) {
 
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity,R.style.MyAlertDialogTheme);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity);
         builder.setTitle(R.string.deletar_item);
         builder.setMessage(R.string.deseja_deletar_a_memoria);
         builder.setPositiveButton(R.string.deletar, new DialogInterface.OnClickListener() {
@@ -165,7 +165,7 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
 
     private void initEditDialog(final Memoria memoria, final int position) {
 
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity,R.style.MyAlertDialogTheme);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity);
         final View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_add_memoria, null);
         builder.setView(dialogView);
 
@@ -199,9 +199,9 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
         });
 
         androidx.appcompat.app.AlertDialog alertDialog = builder.create();
-        Button pBtn = alertDialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE);
-        pBtn.setTextColor(activity.getResources().getColor(R.color.colorAccent));
         alertDialog.show();
+        Button pBtn = alertDialog.getButton(alertDialog.BUTTON_POSITIVE);
+        pBtn.setTextColor(activity.getResources().getColor(R.color.colorAccent));
 
 
     }

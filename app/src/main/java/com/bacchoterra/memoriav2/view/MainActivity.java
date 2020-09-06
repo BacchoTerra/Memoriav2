@@ -17,15 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bacchoterra.memoriav2.R;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editCategoria;
     private Button btnSalvar;
     private RecyclerView recyclerCategorias;
-    private Switch aSwitch;
+    private TextView txtDarkMode;
 
     //Database
     private CategoriaViewmodel categoriaViewmodel;
@@ -58,6 +59,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Bundle components
     public static final String CAT_KEY = "cat_key";
+
+    //Dark mode shared preferences
+
+    public static final String DARK_PREFS = "dark_prefs";
+    public static final String DARK_SKEY = "dark_skey";
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void init() {
 
 
-
-
         initViews();
+        checkSharedPrefs();
         initToolbarAndDrawer();
         initRecyclerView();
         initViewModel();
@@ -84,20 +93,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editCategoria = findViewById(R.id.main_activity_editCategoria);
         btnSalvar = findViewById(R.id.main_activity_btnSalvarCategoria);
         recyclerCategorias = findViewById(R.id.main_activity_catRecyclerView);
-        aSwitch = findViewById(R.id.switch1);
+        txtDarkMode = findViewById(R.id.main_activity_txtDarkMode);
 
         btnSalvar.setOnClickListener(this);
+        txtDarkMode.setOnClickListener(this);
 
-        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
+    }
+
+    private void checkSharedPrefs () {
+
+        sharedPreferences = getSharedPreferences(DARK_PREFS,MODE_PRIVATE);
+
+        if (sharedPreferences.contains(DARK_SKEY)){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            txtDarkMode.setText(R.string.desativar_dark_mode);
+        }
+
+
 
     }
 
@@ -162,8 +174,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onItemClick(View view, int position) {
 
                 String category = categoryAdapter.getCategoria(position).getTitulo();
-                Intent intent = new Intent(MainActivity.this,MemoriaActivity.class);
-                intent.putExtra(CAT_KEY,category);
+                Intent intent = new Intent(MainActivity.this, MemoriaActivity.class);
+                intent.putExtra(CAT_KEY, category);
                 startActivity(intent);
             }
 
@@ -206,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        memoriaViewModel = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MemoriaViewModel.class);
+        memoriaViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MemoriaViewModel.class);
 
 
     }
@@ -251,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final EditText editCategoria = editLayout.findViewById(R.id.dialog_edit_categoria_editCat);
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.MyAlertDialogTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme);
         builder.setView(editLayout);
 
         editCategoria.setText(categoria.getTitulo());
@@ -262,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                if (editCategoria.getText().toString().trim().length()>= 4){
+                if (editCategoria.getText().toString().trim().length() >= 4) {
 
 
                     String oldCat = categoria.getTitulo();
@@ -273,8 +285,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     edited.setRoomId(categoria.getRoomId());
 
                     categoriaViewmodel.update(edited);
-                    memoriaViewModel.updateAllCat(oldCat,newCat);
-                }else {
+                    memoriaViewModel.updateAllCat(oldCat, newCat);
+                } else {
                     Toast.makeText(MainActivity.this, R.string.minimo_de_4_letras, Toast.LENGTH_SHORT).show();
                     categoryAdapter.notifyItemChanged(position);
                 }
@@ -304,6 +316,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @Override
+    public void onBackPressed() {
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -324,19 +347,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
 
+            case R.id.main_activity_txtDarkMode:
+
+                editor = sharedPreferences.edit();
+
+                if (!sharedPreferences.contains(DARK_SKEY)){
+                    editor.putBoolean(DARK_SKEY,true).apply();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    txtDarkMode.setText(R.string.desativar_dark_mode);
+                }else {
+                    editor.remove(DARK_SKEY).apply();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    txtDarkMode.setText(R.string.ativar_dark_mode_beta);
+                }
+
+
+
         }
     }
 
-    @Override
-    public void onBackPressed() {
 
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-
-    }
 }
 
 

@@ -29,10 +29,10 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/main_activity_catRecyclerView"
-                android:background="@color/recyclerViewBackground"
                 android:layout_width="match_parent"
-                tools:listitem="@layout/category_item_row"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@color/recyclerViewBackground"
+                tools:listitem="@layout/category_item_row" />
 
 
         </LinearLayout>

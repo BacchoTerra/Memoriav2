@@ -14,6 +14,7 @@
     <color name="toolbarTextColor">#ffffff</color>
     <color name="categoriaItemRowBackground">#4E4E4E</color>
     <color name="dialogBackground">#4E4E4E</color>
+    <color name="vectorDarkModeTint">@color/colorPrimary</color>
 
 
     <color name="swipeEdit">#00C853</color>
