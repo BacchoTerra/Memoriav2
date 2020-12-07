@@ -4,8 +4,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "memoria_table")
-public class Memoria {
+public class Memoria implements Serializable {
 
     private String tituloMemoria;
     private String descricaoMemoria;
@@ -13,6 +15,7 @@ public class Memoria {
     @PrimaryKey(autoGenerate = true)
     private int roomId;
     private int importancia = 0;
+    private String imageUri;
 
 
     @Ignore
@@ -66,5 +69,13 @@ public class Memoria {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 }

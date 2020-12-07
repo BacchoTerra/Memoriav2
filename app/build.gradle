@@ -47,7 +47,15 @@ dependencies {
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
 
+    //https://github.com/xabaras/RecyclerViewSwipeDecorator
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
+
+    //https://github.com/bumptech/glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //https://github.com/googlesamples/easypermissions
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
 
 

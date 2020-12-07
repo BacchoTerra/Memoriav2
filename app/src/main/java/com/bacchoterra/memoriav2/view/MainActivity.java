@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -36,6 +37,9 @@ import com.bacchoterra.memoriav2.model.Categoria;
 import com.bacchoterra.memoriav2.viewmodel.CategoriaViewmodel;
 import com.bacchoterra.memoriav2.viewmodel.MemoriaViewModel;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -100,15 +104,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void checkSharedPrefs () {
+    private void checkSharedPrefs() {
 
-        sharedPreferences = getSharedPreferences(DARK_PREFS,MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(DARK_PREFS, MODE_PRIVATE);
 
-        if (sharedPreferences.contains(DARK_SKEY)){
+        if (sharedPreferences.contains(DARK_SKEY)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             txtDarkMode.setText(R.string.desativar_dark_mode);
         }
-
 
 
     }
@@ -126,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
 
-                int drag_flags = ItemTouchHelper.ACTION_STATE_IDLE;
+                int drag_flags = ItemTouchHelper.ACTION_STATE_IDLE;;
                 int swipe_flags = ItemTouchHelper.END | ItemTouchHelper.START;
 
                 return makeMovementFlags(drag_flags, swipe_flags);
@@ -134,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+
                 return false;
             }
 
@@ -351,16 +356,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 editor = sharedPreferences.edit();
 
-                if (!sharedPreferences.contains(DARK_SKEY)){
-                    editor.putBoolean(DARK_SKEY,true).apply();
+                if (!sharedPreferences.contains(DARK_SKEY)) {
+                    editor.putBoolean(DARK_SKEY, true).apply();
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     txtDarkMode.setText(R.string.desativar_dark_mode);
-                }else {
+                } else {
                     editor.remove(DARK_SKEY).apply();
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     txtDarkMode.setText(R.string.ativar_dark_mode_beta);
                 }
-
 
 
         }

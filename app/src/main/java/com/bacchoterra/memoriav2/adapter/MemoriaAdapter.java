@@ -3,6 +3,9 @@ package com.bacchoterra.memoriav2.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -111,6 +114,13 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
             }
         });
 
+        holder.imageCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                copyDescToClipBoard(memoria);
+            }
+        });
+
 
     }
 
@@ -127,6 +137,7 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
         View viewDivider;
         ImageView imageDelete;
         ImageView imageEdit;
+        ImageView imageCopy;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -138,6 +149,7 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
             viewDivider = itemView.findViewById(R.id.memoria_item_row_viewDivider);
             imageDelete = itemView.findViewById(R.id.memoria_item_row_imageDelete);
             imageEdit = itemView.findViewById(R.id.memoria_item_row_imageEdit);
+            imageCopy = itemView.findViewById(R.id.memoria_item_row_imageCopy);
 
 
         }
@@ -203,6 +215,14 @@ public class MemoriaAdapter extends ListAdapter<Memoria, MemoriaAdapter.MyViewHo
         Button pBtn = alertDialog.getButton(alertDialog.BUTTON_POSITIVE);
         pBtn.setTextColor(activity.getResources().getColor(R.color.colorAccent));
 
+
+    }
+
+    private void copyDescToClipBoard(Memoria memoria){
+
+        ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("desc",memoria.getDescricaoMemoria());
+        clipboardManager.setPrimaryClip(clipData);
 
     }
 

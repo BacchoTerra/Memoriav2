@@ -43,6 +43,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
     //Componente de bundle
     private Bundle bundle;
     private String stringCategoria;
+    public static final String BUNDLE_KEY = "bundle_key";
 
 
     @Override
@@ -123,6 +124,7 @@ public class MemoriaActivity extends AppCompatActivity implements View.OnClickLi
 
 
     private void initAddDialog() {
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_memoria, null);
