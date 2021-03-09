@@ -11,14 +11,14 @@ import com.bacchoterra.memoriav2.repository.CategoriaRepository;
 
 import java.util.List;
 
-public class CategoriaViewmodel extends AndroidViewModel {
+public class CategoriaViewModel extends AndroidViewModel {
 
     private CategoriaRepository cRepo;
     private LiveData<List<Categoria>> allCategoria;
 
 
 
-    public CategoriaViewmodel(@NonNull Application application) {
+    public CategoriaViewModel(@NonNull Application application) {
         super(application);
         cRepo = new CategoriaRepository(application);
         allCategoria = cRepo.selectAllCategoria();
@@ -40,8 +40,15 @@ public class CategoriaViewmodel extends AndroidViewModel {
         cRepo.deleteAll();
     }
 
-    public LiveData<List<Categoria>> selectAllCategoria(){
+    public LiveData<List<Categoria>> selectAllCategoria(String name){
+
+        if (name != null) {
+            allCategoria = cRepo.selectCategoriaByName(name);
+        }else {
+            allCategoria = cRepo.selectAllCategoria();
+        }
         return allCategoria;
+
     }
 
 

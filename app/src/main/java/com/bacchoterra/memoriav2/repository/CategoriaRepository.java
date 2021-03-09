@@ -20,8 +20,6 @@ public class CategoriaRepository {
 
         MyDatabase myDatabase = MyDatabase.getInstance(application);
         categoriaDao = myDatabase.categoriaDao();
-        allCategorias = categoriaDao.selectAllCategory();
-
     }
 
     public void insert(Categoria c){
@@ -41,6 +39,16 @@ public class CategoriaRepository {
     }
 
     public LiveData<List<Categoria>> selectAllCategoria(){
+
+        allCategorias = categoriaDao.selectAllCategory();
+
+        return allCategorias;
+    }
+
+    public LiveData<List<Categoria>> selectCategoriaByName(String name){
+
+        allCategorias = categoriaDao.selectByName(name);
+
         return allCategorias;
     }
 

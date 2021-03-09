@@ -26,6 +26,11 @@
 
             <include layout="@layout/header_layout" />
 
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/main_activity_searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/main_activity_catRecyclerView"

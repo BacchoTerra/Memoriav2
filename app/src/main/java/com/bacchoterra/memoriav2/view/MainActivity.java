@@ -5,11 +5,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -21,12 +21,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,12 +33,9 @@ import com.bacchoterra.memoriav2.R;
 import com.bacchoterra.memoriav2.adapter.CategoryAdapter;
 import com.bacchoterra.memoriav2.helper.RecyclerItemClickListener;
 import com.bacchoterra.memoriav2.model.Categoria;
-import com.bacchoterra.memoriav2.viewmodel.CategoriaViewmodel;
+import com.bacchoterra.memoriav2.viewmodel.CategoriaViewModel;
 import com.bacchoterra.memoriav2.viewmodel.MemoriaViewModel;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -48,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //LayoutComponents
     private Toolbar toolbar;
+    private SearchView searchView;
     private DrawerLayout drawerLayout;
     private EditText editCategoria;
     private Button btnSalvar;
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txtDarkMode;
 
     //Database
-    private CategoriaViewmodel categoriaViewmodel;
+    private CategoriaViewModel categoriaViewmodel;
     private MemoriaViewModel memoriaViewModel;
 
     //Recyclerview
@@ -89,10 +86,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initToolbarAndDrawer();
         initRecyclerView();
         initViewModel();
+        initSearchView();
     }
 
     private void initViews() {
         toolbar = findViewById(R.id.main_activity_toolbar);
+        searchView = findViewById(R.id.main_activity_searchView);
         drawerLayout = findViewById(R.id.main_activity_drawerLayout);
         editCategoria = findViewById(R.id.main_activity_editCategoria);
         btnSalvar = findViewById(R.id.main_activity_btnSalvarCategoria);
@@ -208,22 +207,80 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+
+                searchView.setIconified(true);
+                searchView.setQuery("",false);
+                searchView.clearFocus();
+
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
 
     }
 
     private void initViewModel() {
 
-        categoriaViewmodel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(CategoriaViewmodel.class);
+        categoriaViewmodel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(CategoriaViewModel.class);
+
+        sendViewModelQuery(null);
+
+        memoriaViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MemoriaViewModel.class);
 
 
-        categoriaViewmodel.selectAllCategoria().observe(this, new Observer<List<Categoria>>() {
+    }
+
+    private void sendViewModelQuery(String name){
+
+        Log.i("porsche", "sendViewModelQuery: " + name);
+
+        categoriaViewmodel.selectAllCategoria(name).observe(this, new Observer<List<Categoria>>() {
             @Override
             public void onChanged(List<Categoria> list) {
                 categoryAdapter.submitList(list);
             }
         });
+    }
 
-        memoriaViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MemoriaViewModel.class);
+    private void initSearchView(){
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if (newText.length() >=1){
+                    sendViewModelQuery("%" + newText + "%");
+                }else {
+                    sendViewModelQuery(null);
+                }
+
+
+                return true;
+            }
+        });
 
 
     }
